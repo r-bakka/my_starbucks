@@ -1,0 +1,315 @@
+*{
+	margin:0;
+	padding:0;
+	font-family:sans-serif;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+body{
+    width:100%;
+	height:100vh;
+	background-image:linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.85)),url("images/bg.jpg");
+	background-size:cover;
+	background-position:center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+}
+
+.nav{
+	width:85%;
+	margin:auto;
+	padding:35px;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+    position: sticky;
+    top: 0;
+}
+
+.logo{
+	width:80px;
+	cursor:pointer;
+}
+
+.nav ul li{
+	list-style:none;
+	display:inline-block;
+	margin:20px;
+	position:relative;
+}
+
+a{
+	text-decoration:none;
+	color:#fff;
+	text-transform:uppercase;
+}
+
+.nav ul li::after{
+	content:'';
+	height:3px;
+	width:0%;
+	background:#007f49;
+	position:absolute;
+	left:0px;
+	bottom:-10px;
+	transition:0.3s;
+}
+
+.nav ul li:hover::after{
+	width:100%;
+}
+.content{
+    width: 99.9%;
+    height: 80%;
+}
+.container{
+    margin: 0 33% 0 33%;
+    width: 34%;
+    height: 100%;
+    position: relative;
+    border-radius: 45px;
+    background-image: url(images/4.jpg);
+    background-size: cover;
+    background-position: -450px;    
+    box-shadow: 0 8px 20px rgba(255,255,255,1);
+}
+.option{
+    width: 100%;
+    display: flex;
+    height: 10%;
+    border-radius: 45px 45px 0 0;
+    position: relative;
+}
+.tologin , .tosignup{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.tologin{
+    border-radius: 60px 0 0 0 ;
+}
+.tosignup{
+    border-radius: 0 60px 0 0 ;
+}
+.tologin a{
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    animation: textlogin 1s linear;
+}
+@keyframes textlogin{
+    0%{
+        color: white;
+    }
+    100%{
+        color: black;
+    }
+}
+.tosignup a{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    animation: textsignup 1s linear;
+}
+@keyframes textsignup {
+    0%{
+        color: black;
+    }
+    100%{
+        color: white;
+    }
+}
+.cover{
+    left: 0;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    border: 1px solid white;
+    border-radius: 60px 60px 60px 0;
+    animation: login 1s linear;
+    background: rgba(255,255,255,.7);
+    z-index: 0;
+}
+@keyframes login{
+    0%{
+        left: 50%;
+        border-radius: 60px 60px 0px 60px;
+    }
+    100%{
+        left: 0%;
+        border-radius: 60px 60px 60px 0;
+    }
+}
+.login , .signup{
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    margin: 5% 10% 0 10%;
+    border: 1px solid white;
+    border-radius: 40px;
+    background: rgba(25, 255, 255, 0.1); 
+    backdrop-filter: blur(10px);           
+    -webkit-backdrop-filter: blur(10px);
+}
+.login{
+    animation: loginopacity 1s linear;
+    z-index: 1;
+}
+@keyframes loginopacity {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+input[type = "text"], input[type = "password"]{
+    border: 1px solid white;
+    outline: none;
+    background: transparent;
+    color: white;
+    padding: 10px;
+    width: 60%;
+    box-sizing: border-box;
+    margin: 10% 20% 0% 20%;
+    border-radius: 10px;
+}
+.check{
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 10% 20% 0 20%;
+}
+input[type = "checkbox"]{
+    margin: 0 10px 0 0;
+}
+.check label{
+    color: white;
+}
+.login button{
+    width: 40%;
+    height: 7%;
+    margin: 10% 30% 2% 30%;    
+    border-radius: 20px;
+    border: none;
+    font-size: larger;
+    font-family: "Poppins", sans-serif;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    transition-duration: .5s;
+}
+button:hover {
+  background: rgba(255,255,255,0.5 );
+}
+h4{
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+}
+h4::after{
+    content: '';
+    width: 25%;
+    height: 1px;
+    background-color: white;
+    border: 1px solid white;
+    position: absolute;
+    margin: 6px 0 6px 4px;
+}
+h4::before{
+    content: '';
+    width: 25%;
+    height: 1px;
+    background-color: white;
+    border: 1px solid white;
+    position: absolute;
+    margin-top: 6px;
+    margin-right: 4px;
+    left: 110px;
+}
+.loginoption{
+    width: 60%;
+    margin: 5px 20% 3px 20%;
+    height: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.google{
+    width: 15%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url(images/google.png);
+    background-position: center;
+    background-size: cover;
+    background-size: 150px;
+    transition-duration: .3s;
+}
+.facebook{
+    width: 15%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url(images/facebook.jpg);
+    background-position: center;
+    background-size: cover;
+    background-size: 150px;
+    transition-duration: .3s;
+}
+.microsoft{
+    width: 15%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url(images/microsoft.jpg);
+    background-position: center;
+    background-size: cover;
+    background-size: 150px;
+    transition-duration: .3s;
+}
+.google:hover{
+    transform: scale(1.1);
+}
+.facebook:hover{
+    transform: scale(1.1);
+}
+.microsoft:hover{
+    transform: scale(1.1);
+}
+.images{
+    display: flex;
+    height: 400px;
+    position: absolute;
+    bottom: 0px;
+    transform: translateY(100%);
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+}
+@keyframes scroll-left {
+  0%   { transform: translate(0%, 100%); }
+  100% { transform: translate(-200%, 100%); }
+}
+
+.images img{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius:20px;
+}
+.footer{
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.85);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(550%);
+}

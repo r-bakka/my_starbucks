@@ -1,0 +1,291 @@
+*{
+	margin:0;
+	padding:0;
+	font-family:sans-serif;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+body{
+    width:100%;
+	height:100vh;
+	background-image:linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.85)),url("images/bg.jpg");
+	background-size:cover;
+	background-position:center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+}
+.nav{
+	width:85%;
+	margin:auto;
+	padding:35px;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+    position: sticky;
+    top: 0;
+}
+.logo{
+	width:80px;
+	cursor:pointer;
+}
+.nav ul li{
+	list-style:none;
+	display:inline-block;
+	margin:20px;
+	position:relative;
+}
+a{
+	text-decoration:none;
+	color:#fff;
+	text-transform:uppercase;
+}
+.nav ul li::after{
+	content:'';
+	height:3px;
+	width:0%;
+	background:#007f49;
+	position:absolute;
+	left:0px;
+	bottom:-10px;
+	transition:0.3s;
+}
+.nav ul li:hover::after{
+	width:100%;
+}
+.content{
+    width: 99.9%;
+    height: 80%;
+}
+h1{
+    color: #fff;
+    font-size: 50px;
+    text-align: center;
+    margin-top: 5%;
+}
+.container{
+    margin-top: 0%;
+    width: 100%;
+    height: 80%;
+    display: flex;
+}
+.container div:nth-child(1){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_1.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(2){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_2.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(3){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_3.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(4){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_4.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(5){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_5.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(6){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_6.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(7){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_7.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(8){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_8.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(9){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_9.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(10){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_10.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(11){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_11.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(12){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_12.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(13){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_13.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div:nth-child(14){
+    width: 18%;
+    height: 80%;
+    background-image: url(images/p_14.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+    margin: 5% 1% 0 1%;
+}
+.container div{
+    transition-duration: 1s;
+}
+.container div::after{
+    width: 90%;
+    height: 20px;
+    position: absolute ;
+    bottom: -50px;
+    text-align: center;
+    color: white;
+    transition-duration: 1s;
+    font-size: large;
+    font-family: cursive;
+}
+.container div:nth-child(1)::after{
+    content: "Caffè Americano";
+}
+.container div:nth-child(2)::after{
+    content: "Caffè Latte";
+}
+.container div:nth-child(3)::after{
+    content: "Caffè Mocha";
+}
+.container div:nth-child(4)::after{
+    content: "Caramel Macchiato";
+}   
+.container div:nth-child(5)::after{
+    content: "Espresso";
+}
+.container div:nth-child(6)::after{
+    content: "Flat White";
+}
+.container div:nth-child(7)::after{
+    content: "Iced Coffee";
+}
+.container div:nth-child(8)::after{
+    content: "Iced Espresso";
+}
+.container div:nth-child(9)::after{
+    content: "Iced Latte";
+}
+.container div:nth-child(10)::after{
+    content: "Iced Mocha";
+}
+.container div:nth-child(11)::after{
+    content: "Iced White Mocha";
+}
+.container div:nth-child(12)::after{
+    content: "Latte Macchiato";
+}
+.container div:nth-child(13)::after{
+    content: "White Chocolate Mocha";
+}
+.container div:nth-child(14)::after{
+    content: "Caramel White Mocha";
+}
+.container div:hover{
+    width:100%;
+    transform:translateY(-100px);
+    box-shadow:0px 10px 30px rgba(255,255,255,0.85);
+}
+.images{
+    display: flex;
+    height: 400px;
+    position: absolute;
+    bottom: 0px;
+    transform: translateY(100%);
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+}
+@keyframes scroll-left {
+  0%   { transform: translate(0%, 100%); }
+  100% { transform: translate(-200%, 100%); }
+}
+.images img{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius:20px;
+}
+.footer{
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.85);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(550%);
+}
