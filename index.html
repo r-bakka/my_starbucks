@@ -1,1455 +1,243 @@
 <!doctype html>
-<html lang="en" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bakka Studios</title>
-  <script src="/_sdk/element_sdk.js"></script>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bakka Studio</title>
+  <meta name="description" content="Bakka Studio – Anime, stories, theories, and songs." />
+
+  <!-- Optional: Tailwind (keep only if you actually use it) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body {
-      box-sizing: border-box;
-    }
-    
-    * {
+    /* =============================
+       GLOBAL STYLES
+       ============================= */
+    * { box-sizing: border-box; }
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a0a;
+      background: #0b0b0f;
       color: #ffffff;
-      overflow-x: hidden;
-      position: relative;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      scroll-behavior: smooth;
     }
 
-    /* Animated Background with Particles */
-    .animated-bg {
+    a { text-decoration: none; color: inherit; }
+
+    /* =============================
+       LOADER
+       ============================= */
+    #loader {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background: #0a0a0a;
-    }
-
-    .bg-particle {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, #667eea 0%, transparent 70%);
-      opacity: 0;
-      animation: particleDrift linear infinite;
-    }
-
-    .bg-particle.purple {
-      background: radial-gradient(circle, #667eea 0%, transparent 70%);
-    }
-
-    .bg-particle.pink {
-      background: radial-gradient(circle, #764ba2 0%, transparent 70%);
-    }
-
-    @keyframes particleDrift {
-      0% {
-        transform: translateY(100vh) translateX(0) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.6;
-      }
-      90% {
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-100px) translateX(var(--drift-x)) scale(1);
-        opacity: 0;
-      }
-    }
-
-    /* Loading Animation */
-    .loader-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0a0a0a;
+      inset: 0;
+      background: #0b0b0f;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
-    .loader-wrapper.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loader-logo {
-      font-size: 4rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 2s ease-in-out infinite;
-      margin-bottom: 2rem;
-      letter-spacing: 0.1em;
-    }
-
-    .loader-images {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .loader-image {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 12px;
-      animation: pulse 1.5s ease-in-out infinite;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .loader-image:nth-child(1) { animation-delay: 0s; }
-    .loader-image:nth-child(2) { animation-delay: 0.3s; }
-    .loader-image:nth-child(3) { animation-delay: 0.6s; }
-    .loader-image:nth-child(4) { animation-delay: 0.9s; }
-
-    .loader-image::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .loader-text {
-      color: #888;
-      font-size: 0.9rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.6;
-      }
-      50% {
-        transform: scale(1.1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
-      }
-      50% {
-        filter: drop-shadow(0 0 40px rgba(118, 75, 162, 0.8));
-      }
-    }
-
-    /* Intro Animation Overlay */
-    .intro-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0a0a0a;
-      z-index: 10000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .intro-overlay.hidden {
-      opacity: 0;
-    }
-
-    /* Portal/Wormhole Effect */
-    .portal-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .portal-ring {
-      position: absolute;
-      border: 3px solid;
-      border-radius: 50%;
-      opacity: 0;
-    }
-
-    .portal-ring.animate {
-      animation: portalExpand 2s ease-out forwards;
-    }
-
-    .portal-ring:nth-child(1) {
-      width: 100px;
-      height: 100px;
-      border-color: rgba(102, 126, 234, 0.8);
-      animation-delay: 0s;
-    }
-
-    .portal-ring:nth-child(2) {
-      width: 150px;
-      height: 150px;
-      border-color: rgba(118, 75, 162, 0.7);
-      animation-delay: 0.1s;
-    }
-
-    .portal-ring:nth-child(3) {
-      width: 200px;
-      height: 200px;
-      border-color: rgba(102, 126, 234, 0.6);
-      animation-delay: 0.2s;
-    }
-
-    .portal-ring:nth-child(4) {
-      width: 250px;
-      height: 250px;
-      border-color: rgba(118, 75, 162, 0.5);
-      animation-delay: 0.3s;
-    }
-
-    .portal-ring:nth-child(5) {
-      width: 300px;
-      height: 300px;
-      border-color: rgba(102, 126, 234, 0.4);
-      animation-delay: 0.4s;
-    }
-
-    @keyframes portalExpand {
-      0% {
-        transform: scale(0) rotate(0deg);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: scale(8) rotate(720deg);
-        opacity: 0;
-      }
-    }
-
-    /* Portal particles */
-    .portal-particles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #667eea;
-      border-radius: 50%;
-      opacity: 0;
-    }
-
-    .particle.animate {
-      animation: particleFloat 2s ease-out forwards;
-    }
-
-    @keyframes particleFloat {
-      0% {
-        transform: translate(0, 0) scale(0);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate(var(--tx), var(--ty)) scale(1);
-        opacity: 0;
-      }
-    }
-
-    .intro-text {
-      font-size: 5rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 0.1em;
-      opacity: 0;
-      transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      z-index: 10;
-      filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.6));
-    }
-
-    .intro-text.fade-in {
-      animation: fadeInTextPortal 1.5s ease-out forwards;
-    }
-
-    .intro-text.move-up {
-      opacity: 1;
-      transform: translateY(calc(-50vh + 3rem));
-    }
-
-    @keyframes fadeInTextPortal {
-      0% {
-        opacity: 0;
-        transform: scale(0.5);
-        filter: blur(20px) drop-shadow(0 0 30px rgba(102, 126, 234, 0.6));
-      }
-      60% {
-        filter: blur(5px) drop-shadow(0 0 40px rgba(118, 75, 162, 0.8));
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0) drop-shadow(0 0 30px rgba(102, 126, 234, 0.6));
-      }
-    }
-
-    /* Hero content animation */
-    .hero-content {
-      opacity: 1;
-    }
-
-    .hero-subtitle,
-    .hero-cta {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .hero-subtitle.animate,
-    .hero-cta.animate {
-      animation: fadeInUp 1s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Navigation */
-    .nav-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
+    /* =============================
+       NAVIGATION
+       ============================= */
     nav {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 16px 32px;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.4);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 1000;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
+    nav .links a {
+      margin-left: 24px;
+      font-weight: 600;
       position: relative;
     }
 
-    .nav-links a::after {
-      content: '';
+    nav .links a::after {
+      content: "";
       position: absolute;
-      bottom: -5px;
       left: 0;
+      bottom: -6px;
       width: 0;
       height: 2px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      transition: width 0.3s ease;
+      background: #ff2a8a;
+      transition: 0.3s ease;
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
+    nav .links a:hover::after { width: 100%; }
+
+    /* =============================
+       SECTIONS
+       ============================= */
+    section {
+      min-height: 100vh;
+      padding: 120px 10vw 80px;
     }
 
-    .nav-links a.active {
-      color: #667eea;
-    }
-
-    /* Main Content */
-    .main-content-wrapper {
-      width: 100%;
-      min-height: 100%;
-      padding-top: 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .page-content {
-      display: none;
-      animation: fadeIn 0.6s ease;
-    }
-
-    .page-content.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Home Page */
-    .hero-section {
-      height: calc(100% - 80px);
+    #home {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 2rem;
-      background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, rgba(10, 10, 10, 0) 70%);
+      gap: 24px;
     }
 
-    .hero-title {
-      font-size: 5rem;
-      font-weight: 900;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.2;
-      opacity: 1;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-      color: #aaa;
-      margin-bottom: 3rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-cta {
+    .btn {
       display: inline-block;
-      padding: 1rem 3rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff2a8a, #7b5cff);
+      font-weight: 700;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
     }
 
-    .hero-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    .btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255,42,138,0.4);
     }
 
-    /* Content Pages */
-    .content-page {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-
-    .page-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .page-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .page-description {
-      font-size: 1.2rem;
-      color: #888;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .grid-container {
+    /* =============================
+       WORKS GRID
+       ============================= */
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(102, 126, 234, 0.5);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
     }
 
-    .card-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-    }
-
-    .card-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-
-    .card-description {
-      color: #aaa;
-      line-height: 1.6;
-    }
-
-    /* About Us Page */
-    .about-content {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .about-intro {
-      font-size: 1.3rem;
-      color: #aaa;
-      line-height: 1.8;
-      margin-bottom: 4rem;
-    }
-
-    .team-grid {
+    /* =============================
+       CONTACT FORM
+       ============================= */
+    form {
+      max-width: 500px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
+      gap: 16px;
     }
 
-    .team-member {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .team-member:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(102, 126, 234, 0.5);
-      transform: translateY(-5px);
-    }
-
-    .team-avatar {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      margin: 0 auto 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-    }
-
-    .team-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #fff;
-    }
-
-    .team-role {
-      color: #667eea;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* Contact Us Page */
-    .contact-content {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .contact-intro {
-      font-size: 1.2rem;
-      color: #aaa;
-      text-align: center;
-      margin-bottom: 3rem;
-      line-height: 1.8;
-    }
-
-    .contact-form {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 3rem;
-    }
-
-    .form-group {
-      margin-bottom: 2rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: all 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #667eea;
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 150px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 1.2rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+    input, textarea {
+      padding: 14px;
+      border-radius: 12px;
       border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    button {
       cursor: pointer;
-      transition: all 0.3s ease;
+      border: none;
     }
 
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-    }
-
-    .contact-info {
-      margin-top: 3rem;
+    /* =============================
+       FOOTER
+       ============================= */
+    footer {
+      padding: 24px;
       text-align: center;
+      background: rgba(0,0,0,0.5);
     }
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .contact-text {
-      color: #aaa;
-    }
-
-    .success-message {
-      display: none;
-      background: rgba(102, 126, 234, 0.1);
-      border: 1px solid rgba(102, 126, 234, 0.3);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #667eea;
-      font-weight: 600;
-    }
-
-    .success-message.show {
-      display: block;
-    }
-
-    /* Mobile Responsive */
     @media (max-width: 768px) {
-      .nav-links {
-        gap: 1rem;
-      }
-
-      .nav-links a {
-        font-size: 0.75rem;
-      }
-
-      .hero-title {
-        font-size: 3rem;
-      }
-
-      .intro-text {
-        font-size: 3rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.2rem;
-      }
-
-      .page-title {
-        font-size: 2.5rem;
-      }
-
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-
-      .loader-logo {
-        font-size: 2.5rem;
-      }
-
-      .loader-images {
-        gap: 1rem;
-      }
-
-      .loader-image {
-        width: 60px;
-        height: 60px;
-      }
-
-      .contact-form {
-        padding: 2rem;
-      }
-
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
+      nav { padding: 12px 20px; }
+      section { padding: 100px 6vw 60px; }
     }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
- </head>
- <body class="h-full"><!-- Animated Background with Particles -->
-  <div class="animated-bg" id="particleBg"></div><!-- Loading Animation -->
-  <div class="loader-wrapper" id="loader">
-   <div class="loader-logo" id="loaderLogo">
-    BAKKA STUDIOS
-   </div>
-   <div class="loader-images">
-    <div class="loader-image"></div>
-    <div class="loader-image"></div>
-    <div class="loader-image"></div>
-    <div class="loader-image"></div>
-   </div>
-   <div class="loader-text">
-    Loading Experience...
-   </div>
-  </div><!-- Intro Animation Overlay -->
-  <div class="intro-overlay" id="introOverlay">
-   <div class="portal-container" id="portalContainer">
-    <div class="portal-ring"></div>
-    <div class="portal-ring"></div>
-    <div class="portal-ring"></div>
-    <div class="portal-ring"></div>
-    <div class="portal-ring"></div>
-   </div>
-   <div class="portal-particles" id="portalParticles"></div>
-   <div class="intro-text" id="introText">
-    BAKKA STUDIOS
-   </div>
-  </div><!-- Navigation -->
-  <div class="nav-wrapper">
-   <nav>
-    <div class="logo" id="logoNav">
-     BAKKA STUDIOS
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">Loading…</div>
+
+  <!-- NAV -->
+  <nav>
+    <strong>Bakka Studio</strong>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#works">Works</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </div>
-    <ul class="nav-links">
-     <li><a href="#home" class="nav-link active" id="navHome">Home</a></li>
-     <li><a href="#anime" class="nav-link" id="navAnime">Anime</a></li>
-     <li><a href="#theories" class="nav-link" id="navTheories">Theories</a></li>
-     <li><a href="#stories" class="nav-link" id="navStories">Stories</a></li>
-     <li><a href="#songs" class="nav-link" id="navSongs">Songs</a></li>
-     <li><a href="#about" class="nav-link" id="navAbout">About Us</a></li>
-     <li><a href="#contact" class="nav-link" id="navContact">Contact</a></li>
-    </ul>
-   </nav>
-  </div><!-- Main Content -->
-  <div class="main-content-wrapper h-full"><!-- Home Page -->
-   <div class="page-content active h-full" id="home">
-    <div class="hero-section">
-     <div class="hero-content">
-      <h1 class="hero-title" id="heroTitle">BAKKA STUDIOS</h1>
-      <p class="hero-subtitle" id="heroTagline">Where Stories Come to Life</p><a href="#explore" class="hero-cta">Explore Our Work</a>
-     </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <h1>Anime • Stories • Theories • Songs</h1>
+    <p>AI-powered creative studio exploring anime culture and storytelling.</p>
+    <a href="#works" class="btn">Explore Works</a>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <h2>Our Works</h2>
+    <div class="grid">
+      <div class="card">Anime</div>
+      <div class="card">Stories</div>
+      <div class="card">Theories</div>
+      <div class="card">Songs</div>
     </div>
-   </div><!-- Explore Page -->
-   <div class="page-content" id="explore">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Explore Our Works</h2>
-      <p class="page-description">Choose a category to dive into the world of Bakka Studios</p>
-     </div>
-     <div class="grid-container" style="max-width: 900px; margin: 0 auto;">
-      <div class="card" onclick="navigateToPage('anime'); window.location.hash = 'anime';">
-       <div class="card-icon">
-        🎭
-       </div>
-       <h3 class="card-title">ANIME</h3>
-       <p class="card-description">Discover our collection of breathtaking anime productions with stunning visuals and epic storylines.</p>
-      </div>
-      <div class="card" onclick="navigateToPage('theories'); window.location.hash = 'theories';">
-       <div class="card-icon">
-        🔍
-       </div>
-       <h3 class="card-title">THEORIES</h3>
-       <p class="card-description">Dive deep into the hidden meanings and connections within our stories and characters.</p>
-      </div>
-      <div class="card" onclick="navigateToPage('stories'); window.location.hash = 'stories';">
-       <div class="card-icon">
-        📚
-       </div>
-       <h3 class="card-title">STORIES</h3>
-       <p class="card-description">Read original narratives and side stories that expand our universe beyond the screen.</p>
-      </div>
-      <div class="card" onclick="navigateToPage('songs'); window.location.hash = 'songs';">
-       <div class="card-icon">
-        🎵
-       </div>
-       <h3 class="card-title">SONGS</h3>
-       <p class="card-description">Listen to powerful soundtracks and opening themes that bring our stories to life.</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- Anime Page -->
-   <div class="page-content" id="anime">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Anime</h2>
-      <p class="page-description">Discover our collection of breathtaking anime productions that push the boundaries of storytelling and animation.</p>
-     </div>
-     <div class="grid-container">
-      <div class="card">
-       <div class="card-icon">
-        🎭
-       </div>
-       <h3 class="card-title">Epic Series</h3>
-       <p class="card-description">Immerse yourself in epic storylines with stunning visuals and unforgettable characters that will keep you on the edge of your seat.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        ⚔️
-       </div>
-       <h3 class="card-title">Action Adventures</h3>
-       <p class="card-description">Experience heart-pounding action sequences and intense battles brought to life with cutting-edge animation techniques.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        ����
-       </div>
-       <h3 class="card-title">Fantasy Worlds</h3>
-       <p class="card-description">Journey through magical realms and mystical landscapes crafted with meticulous attention to detail and artistry.</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- Theories Page -->
-   <div class="page-content" id="theories">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Theories</h2>
-      <p class="page-description">Dive deep into the hidden meanings and connections within our stories. Explore fan theories and official insights.</p>
-     </div>
-     <div class="grid-container">
-      <div class="card">
-       <div class="card-icon">
-        🔍
-       </div>
-       <h3 class="card-title">Character Analysis</h3>
-       <p class="card-description">Uncover the deeper motivations and hidden backstories of your favorite characters through detailed analysis.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        🔗
-       </div>
-       <h3 class="card-title">Plot Connections</h3>
-       <p class="card-description">Discover the intricate web of connections between storylines and how they interweave to create the bigger picture.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        🌌
-       </div>
-       <h3 class="card-title">World Building</h3>
-       <p class="card-description">Explore the rich lore and detailed world-building that forms the foundation of our universe.</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- Stories Page -->
-   <div class="page-content" id="stories">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Stories</h2>
-      <p class="page-description">Read original narratives and side stories that expand the universe beyond what you see on screen.</p>
-     </div>
-     <div class="grid-container">
-      <div class="card">
-       <div class="card-icon">
-        ���
-       </div>
-       <h3 class="card-title">Origin Tales</h3>
-       <p class="card-description">Learn the untold origins of beloved characters and the events that shaped them into who they are today.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        ✨
-       </div>
-       <h3 class="card-title">Side Quests</h3>
-       <p class="card-description">Experience additional adventures that happen between the main story arcs, revealing new depths to the world.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        🎨
-       </div>
-       <h3 class="card-title">Concept Stories</h3>
-       <p class="card-description">Peek behind the curtain at early concepts and alternate storylines that influenced the final productions.</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- Songs Page -->
-   <div class="page-content" id="songs">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Songs</h2>
-      <p class="page-description">Listen to the powerful soundtracks and opening themes that bring our stories to life through music.</p>
-     </div>
-     <div class="grid-container">
-      <div class="card">
-       <div class="card-icon">
-        🎵
-       </div>
-       <h3 class="card-title">Opening Themes</h3>
-       <p class="card-description">Epic opening songs that set the tone for each series, featuring collaborations with top artists.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        🎼
-       </div>
-       <h3 class="card-title">Soundtracks</h3>
-       <p class="card-description">Orchestral compositions and emotional scores that enhance every dramatic moment and battle scene.</p>
-      </div>
-      <div class="card">
-       <div class="card-icon">
-        🎤
-       </div>
-       <h3 class="card-title">Character Songs</h3>
-       <p class="card-description">Special character themes that capture the essence and personality of fan-favorite characters.</p>
-      </div>
-     </div>
-    </div>
-   </div><!-- About Us Page -->
-   <div class="page-content" id="about">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">About Us</h2>
-     </div>
-     <div class="about-content">
-      <p class="about-intro" id="aboutIntro">Bakka Studios is a creative group of four passionate school students who share a love for anime, storytelling, and creativity. We created this platform to share our original anime concepts, stories, theories, and creative works with the world. Together, we're turning our imagination into reality!</p>
-      <div class="team-grid">
-       <div class="team-member">
-        <div class="team-avatar">
-         💻
-        </div>
-        <h3 class="team-name">R</h3>
-        <p class="team-role">Team Captain &amp; Tech Expert</p>
-       </div>
-       <div class="team-member">
-        <div class="team-avatar">
-         📚
-        </div>
-        <h3 class="team-name">Z</h3>
-        <p class="team-role">Storyteller &amp; Plot Master</p>
-       </div>
-       <div class="team-member">
-        <div class="team-avatar">
-         ✍️
-        </div>
-        <h3 class="team-name">F</h3>
-        <p class="team-role">Documenter &amp; Creator</p>
-       </div>
-       <div class="team-member">
-        <div class="team-avatar">
-         🎭
-        </div>
-        <h3 class="team-name">M</h3>
-        <p class="team-role">Concept Creator &amp; Mood Maker</p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div><!-- Contact Us Page -->
-   <div class="page-content" id="contact">
-    <div class="content-page">
-     <div class="page-header">
-      <h2 class="page-title">Contact Us</h2>
-     </div>
-     <div class="contact-content">
-      <p class="contact-intro" id="contactIntro">Have a question or want to work with us? We'd love to hear from you! Fill out the form below and we'll get back to you as soon as possible.</p>
-      <div class="success-message" id="successMessage">
-       Thank you for reaching out! We'll get back to you soon.
-      </div>
-      <form class="contact-form" id="contactForm">
-       <div class="form-group"><label for="name">Your Name</label> <input type="text" id="name" name="name" required>
-       </div>
-       <div class="form-group"><label for="email">Email Address</label> <input type="email" id="email" name="email" required>
-       </div>
-       <div class="form-group"><label for="subject">Subject</label> <input type="text" id="subject" name="subject" required>
-       </div>
-       <div class="form-group"><label for="message">Message</label> <textarea id="message" name="message" required></textarea>
-       </div><button type="submit" class="submit-btn">Send Message</button>
-      </form>
-      <div class="contact-info">
-       <div class="contact-item">
-        <div class="contact-icon">
-         📧
-        </div><span class="contact-text" id="contactEmail">contact@bakkastudios.com</span>
-       </div>
-       <div class="contact-item">
-        <div class="contact-icon">
-         🌍
-        </div><span class="contact-text">Tokyo, Japan</span>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Bakka Studio blends imagination, anime aesthetics, and AI creativity to tell stories that resonate.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <form action="mailto:yourmail@gmail.com" method="post" enctype="text/plain">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="4" placeholder="Your Message"></textarea>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>© 2025 Bakka Studio</footer>
+
   <script>
-    const defaultConfig = {
-      site_title: 'BAKKA STUDIOS',
-      tagline: 'Where Stories Come to Life',
-      nav_home: 'Home',
-      nav_anime: 'Anime',
-      nav_theories: 'Theories',
-      nav_stories: 'Stories',
-      nav_songs: 'Songs',
-      nav_about: 'About Us',
-      nav_contact: 'Contact',
-      about_intro: "Bakka Studios is a creative group of four passionate school students who share a love for anime, storytelling, and creativity. We created this platform to share our original anime concepts, stories, theories, and creative works with the world. Together, we're turning our imagination into reality!",
-      contact_intro: "Have a question or want to work with us? We'd love to hear from you! Fill out the form below and we'll get back to you as soon as possible.",
-      contact_email: 'contact@bakkastudios.com'
-    };
-
-    // Particle system with mouse interaction
-    let particles = [];
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-
-    class Particle {
-      constructor(container) {
-        this.element = document.createElement('div');
-        this.element.className = `bg-particle ${Math.random() > 0.5 ? 'purple' : 'pink'}`;
-        
-        // Random size between 3px and 15px
-        this.size = Math.random() * 12 + 3;
-        this.element.style.width = `${this.size}px`;
-        this.element.style.height = `${this.size}px`;
-        
-        // Random starting position
-        this.x = Math.random() * window.innerWidth;
-        this.y = Math.random() * window.innerHeight;
-        
-        // Base velocity for upward movement
-        this.baseVelocityY = -(Math.random() * 0.5 + 0.3);
-        this.baseVelocityX = (Math.random() - 0.5) * 0.3;
-        
-        // Current velocity (will be influenced by mouse)
-        this.velocityX = this.baseVelocityX;
-        this.velocityY = this.baseVelocityY;
-        
-        // Add blur effect
-        this.element.style.filter = `blur(${Math.random() * 3 + 2}px)`;
-        this.element.style.opacity = '0.6';
-        
-        // Disable animation, we'll handle movement manually
-        this.element.style.animation = 'none';
-        this.element.style.position = 'absolute';
-        
-        this.updatePosition();
-        container.appendChild(this.element);
-      }
-      
-      updatePosition() {
-        this.element.style.left = `${this.x}px`;
-        this.element.style.top = `${this.y}px`;
-      }
-      
-      update() {
-        // Calculate distance to mouse
-        const dx = mouseX - this.x;
-        const dy = mouseY - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        // Influence radius (how far the mouse affects particles)
-        const influenceRadius = 200;
-        
-        if (distance < influenceRadius) {
-          // Calculate repulsion force (particles move away from mouse)
-          const force = (influenceRadius - distance) / influenceRadius;
-          const angle = Math.atan2(dy, dx);
-          
-          // Apply repulsion
-          this.velocityX = this.baseVelocityX - Math.cos(angle) * force * 2;
-          this.velocityY = this.baseVelocityY - Math.sin(angle) * force * 2;
-        } else {
-          // Gradually return to base velocity
-          this.velocityX += (this.baseVelocityX - this.velocityX) * 0.05;
-          this.velocityY += (this.baseVelocityY - this.velocityY) * 0.05;
-        }
-        
-        // Update position
-        this.x += this.velocityX;
-        this.y += this.velocityY;
-        
-        // Wrap around screen edges
-        if (this.y < -20) {
-          this.y = window.innerHeight + 20;
-          this.x = Math.random() * window.innerWidth;
-        }
-        if (this.x < -20) {
-          this.x = window.innerWidth + 20;
-        }
-        if (this.x > window.innerWidth + 20) {
-          this.x = -20;
-        }
-        
-        this.updatePosition();
-      }
-    }
-
-    // Create floating particles background
-    function createBackgroundParticles() {
-      const container = document.getElementById('particleBg');
-      const particleCount = 150; // Increased from 50 to 150
-      
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(container));
-      }
-    }
-
-    // Animation loop
-    function animateParticles() {
-      particles.forEach(particle => particle.update());
-      requestAnimationFrame(animateParticles);
-    }
-
-    // Track mouse position
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      // Reposition particles that are out of bounds
-      particles.forEach(particle => {
-        if (particle.x > window.innerWidth) {
-          particle.x = window.innerWidth - 20;
-        }
-        if (particle.y > window.innerHeight) {
-          particle.y = window.innerHeight - 20;
-        }
-      });
-    });
-
-    // Initialize particles on load
-    createBackgroundParticles();
-    animateParticles();
-
-    // Create portal particles
-    function createPortalParticles() {
-      const container = document.getElementById('portalParticles');
-      const particleCount = 30;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        // Random angle and distance
-        const angle = (Math.PI * 2 * i) / particleCount;
-        const distance = 200 + Math.random() * 300;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        
-        particle.style.setProperty('--tx', `${tx}px`);
-        particle.style.setProperty('--ty', `${ty}px`);
-        particle.style.left = '50%';
-        particle.style.top = '50%';
-        particle.style.animationDelay = `${i * 0.05}s`;
-        
-        container.appendChild(particle);
-      }
-    }
-
-    // Intro Animation Sequence
+    // Remove loader after page load
     window.addEventListener('load', () => {
-      const introText = document.getElementById('introText');
-      const introOverlay = document.getElementById('introOverlay');
-      const heroSubtitle = document.getElementById('heroTagline');
-      const heroCta = document.querySelector('.hero-cta');
-      const portalRings = document.querySelectorAll('.portal-ring');
-      
-      // Create particles
-      createPortalParticles();
-      
-      // Step 1: Hide initial loader after 2.5 seconds
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('hidden');
-        
-        // Step 2: Start portal animation
-        setTimeout(() => {
-          // Animate portal rings
-          portalRings.forEach(ring => ring.classList.add('animate'));
-          
-          // Animate particles
-          const particles = document.querySelectorAll('.particle');
-          particles.forEach(p => p.classList.add('animate'));
-          
-          // Step 3: Fade in "BAKKA STUDIOS" text from portal
-          setTimeout(() => {
-            introText.classList.add('fade-in');
-            
-            // Step 4: After fade in (1.5s), move text up and show other content
-            setTimeout(() => {
-              introText.classList.add('move-up');
-              
-              // Step 5: Fade in subtitle and CTA
-              setTimeout(() => {
-                heroSubtitle.classList.add('animate');
-                heroCta.classList.add('animate');
-                
-                // Step 6: Fade out the black overlay
-                setTimeout(() => {
-                  introOverlay.classList.add('hidden');
-                }, 800);
-              }, 1000);
-            }, 1500);
-          }, 800);
-        }, 100);
-      }, 2500);
+      const loader = document.getElementById('loader');
+      if (loader) loader.style.display = 'none';
     });
 
-    // Navigation
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pages = document.querySelectorAll('.page-content');
-
-    function navigateToPage(pageId) {
-      // Update active link
-      navLinks.forEach(link => link.classList.remove('active'));
-      const activeLink = document.querySelector(`a[href="#${pageId}"]`);
-      if (activeLink) {
-        activeLink.classList.add('active');
-      }
-
-      // Update active page
-      pages.forEach(page => page.classList.remove('active'));
-      const activePage = document.getElementById(pageId);
-      if (activePage) {
-        activePage.classList.add('active');
-      }
-    }
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const pageId = link.getAttribute('href').substring(1);
-        navigateToPage(pageId);
-        window.location.hash = pageId;
+    // Simple hash navigation fallback
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        const id = link.getAttribute('href');
+        if (id.startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+          history.pushState(null, '', id);
+        }
       });
     });
-
-    // Handle initial hash
-    if (window.location.hash) {
-      const pageId = window.location.hash.substring(1);
-      navigateToPage(pageId);
-    }
-
-    // Logo click to home
-    document.getElementById('logoNav').addEventListener('click', () => {
-      navigateToPage('home');
-      window.location.hash = 'home';
-    });
-
-    // Hero CTA
-    document.querySelector('.hero-cta').addEventListener('click', (e) => {
-      e.preventDefault();
-      navigateToPage('explore');
-      window.location.hash = 'explore';
-    });
-
-    // Contact form submission
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      // Show success message
-      document.getElementById('successMessage').classList.add('show');
-      
-      // Reset form
-      document.getElementById('contactForm').reset();
-      
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        document.getElementById('successMessage').classList.remove('show');
-      }, 5000);
-    });
-
-    // Element SDK implementation
-    async function onConfigChange(config) {
-      const siteTitle = config.site_title || defaultConfig.site_title;
-      const tagline = config.tagline || defaultConfig.tagline;
-      
-      document.getElementById('loaderLogo').textContent = siteTitle;
-      document.getElementById('introText').textContent = siteTitle;
-      document.getElementById('logoNav').textContent = siteTitle;
-      document.getElementById('heroTitle').textContent = siteTitle;
-      document.getElementById('heroTagline').textContent = tagline;
-      
-      document.getElementById('navHome').textContent = config.nav_home || defaultConfig.nav_home;
-      document.getElementById('navAnime').textContent = config.nav_anime || defaultConfig.nav_anime;
-      document.getElementById('navTheories').textContent = config.nav_theories || defaultConfig.nav_theories;
-      document.getElementById('navStories').textContent = config.nav_stories || defaultConfig.nav_stories;
-      document.getElementById('navSongs').textContent = config.nav_songs || defaultConfig.nav_songs;
-      document.getElementById('navAbout').textContent = config.nav_about || defaultConfig.nav_about;
-      document.getElementById('navContact').textContent = config.nav_contact || defaultConfig.nav_contact;
-      
-      document.getElementById('aboutIntro').textContent = config.about_intro || defaultConfig.about_intro;
-      document.getElementById('contactIntro').textContent = config.contact_intro || defaultConfig.contact_intro;
-      document.getElementById('contactEmail').textContent = config.contact_email || defaultConfig.contact_email;
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
-
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['site_title', config.site_title || defaultConfig.site_title],
-        ['tagline', config.tagline || defaultConfig.tagline],
-        ['nav_home', config.nav_home || defaultConfig.nav_home],
-        ['nav_anime', config.nav_anime || defaultConfig.nav_anime],
-        ['nav_theories', config.nav_theories || defaultConfig.nav_theories],
-        ['nav_stories', config.nav_stories || defaultConfig.nav_stories],
-        ['nav_songs', config.nav_songs || defaultConfig.nav_songs],
-        ['nav_about', config.nav_about || defaultConfig.nav_about],
-        ['nav_contact', config.nav_contact || defaultConfig.nav_contact],
-        ['about_intro', config.about_intro || defaultConfig.about_intro],
-        ['contact_intro', config.contact_intro || defaultConfig.contact_intro],
-        ['contact_email', config.contact_email || defaultConfig.contact_email]
-      ]);
-    }
-
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b256497b6016091',t:'MTc2NjQ2NzA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+  <!-- IMPORTANT:
+       ❌ Removed Canva SDK scripts (/_sdk/element_sdk.js, /_sdk/data_sdk.js)
+       ❌ Removed Cloudflare auto-injected iframe script
+       ✔ This file is GitHub Pages–safe as a single index.html
+  -->
+
+</body>
 </html>
